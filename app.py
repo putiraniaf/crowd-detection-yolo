@@ -5,9 +5,7 @@ from ultralytics import YOLO
 import tempfile
 import os
 
-# =========================
 # CONFIG
-# =========================
 st.set_page_config(
     page_title="Crowd Detection using YOLOv8",
     layout="wide"
@@ -19,9 +17,7 @@ st.write(
     "classify crowd levels from CCTV-like images."
 )
 
-# =========================
 # LOAD MODEL
-# =========================
 @st.cache_resource
 def load_model():
     model_path = os.path.join("model", "best.pt")
@@ -29,9 +25,7 @@ def load_model():
 
 model = load_model()
 
-# =========================
 # UTILS
-# =========================
 def classify_crowd(count):
     if count <= 3:
         return "Sedikit"
@@ -53,9 +47,7 @@ def draw_boxes(image, results, conf_thres):
 
     return image, count
 
-# =========================
 # SIDEBAR
-# =========================
 st.sidebar.header("⚙️ Settings")
 conf_thres = st.sidebar.slider(
     "Confidence Threshold",
@@ -70,9 +62,7 @@ input_type = st.sidebar.radio(
     ["Image", "Video"]
 )
 
-# =========================
 # IMAGE MODE
-# =========================
 if input_type == "Image":
     uploaded_file = st.file_uploader(
         "Upload an image (jpg / png)",
@@ -102,9 +92,7 @@ if input_type == "Image":
             st.metric("People Count", people_count)
             st.metric("Crowd Level", crowd_level)
 
-# =========================
 # VIDEO MODE
-# =========================
 elif input_type == "Video":
     uploaded_video = st.file_uploader(
         "Upload a video file",
@@ -145,9 +133,8 @@ elif input_type == "Video":
         cap.release()
         os.remove(tfile.name)
 
-# =========================
+
 # FOOTER
-# =========================
 st.markdown("---")
 st.caption(
     "Final Project – Deep Learning | "
